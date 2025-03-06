@@ -10,4 +10,6 @@ public class MessageConstant {
     public static final String SECKILL_ALREADY_END = "秒杀活动已结束";
     public static final String SECKILL_STOCK_EMPTY = "秒杀券库存不足";
     public static final String SECKILL_ALREADY_GET = "用户不能重复购买秒杀券";
+    public static final String BLOG_NOT_EXIST = "该博客不存在";
+    public static final String BLOG_SAVE_FAIL = "笔记发布失败";
 }
