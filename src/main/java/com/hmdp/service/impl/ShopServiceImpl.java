@@ -159,7 +159,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
 //            return null;
 //        }
 //
-//        // 3.1不存在，反序列化shopJson
+//        // 3.1存在，反序列化shopJson
 //        RedisData redisData = JSONUtil.toBean(shopJson, RedisData.class);
 //        JSONObject data = (JSONObject) redisData.getData();
 //        Shop shop = JSONUtil.toBean(data, Shop.class);

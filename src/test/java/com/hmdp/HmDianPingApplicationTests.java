@@ -1,10 +1,15 @@
 package com.hmdp;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.json.JSONUtil;
 import com.hmdp.entity.Shop;
+import com.hmdp.entity.VoucherOrder;
 import com.hmdp.service.impl.ShopServiceImpl;
 import com.hmdp.utils.CacheClient;
 import com.hmdp.utils.RedisIdWorker;
 import org.junit.jupiter.api.Test;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.geo.Point;
@@ -38,6 +43,9 @@ class HmDianPingApplicationTests {
     private RedisIdWorker redisIdWorker;
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @Test
     void testSaveShop(){
@@ -96,4 +104,18 @@ class HmDianPingApplicationTests {
         }
     }
 
+    @Test
+    public void testSendOrder(){
+        VoucherOrder voucherOrder = new VoucherOrder();
+        long orderId = redisIdWorker.nextId("order");
+        voucherOrder.setVoucherId(11L);
+        voucherOrder.setUserId(1010L);
+        voucherOrder.setId(orderId);
+
+        String jsonStr = JSONUtil.toJsonStr(voucherOrder);
+
+        // 发送订单数据
+        String exchangeName = "order.direct";
+        rabbitTemplate.convertAndSend(exchangeName, "", jsonStr);
+    }
 }

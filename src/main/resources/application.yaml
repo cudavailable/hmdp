@@ -19,6 +19,12 @@ spring:
         time-between-eviction-runs: 10s
   jackson:
     default-property-inclusion: non_null # JSON处理时忽略非空字段
+  rabbitmq:
+    host: 192.168.45.137
+    port: 5672
+    username: hmdp
+    password: 123
+    virtual-host: /hmdp
 mybatis-plus:
   type-aliases-package: com.hmdp.entity # 别名扫描包
 logging:
